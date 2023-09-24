@@ -150,7 +150,7 @@
   (check-property (make-config #:tests 50)
                   (property #:name "The Law of Rank and Shape"
                             ([t gen:tensor])
-                            (check-dual-equal? (len (shape t)) (rank t))))
+                            (check-equal? (len (shape t)) (rank t))))
 
   ;;************************************************************
   ;;**** The Law of Rank and Shape *****************************

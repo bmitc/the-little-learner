@@ -1,6 +1,8 @@
 #lang racket
 
-(provide (all-defined-out))
+(provide line
+         shape
+         rank)
 
 (require malt)
 
@@ -12,6 +14,24 @@
     (λ (θ)
       (+ (* (ref θ 0) x)
          (ref θ 1)))))
+
+;; Determines the shape of a tensor.
+(define shape
+  (λ (t)
+    (cond [(scalar? t) (list)]
+          [else (cons (tlen t) (shape (tref t 0)))])))
+
+;; Determines the rank of a tensor.
+(define rank
+  (λ (t)
+    (ranked t 0)))
+
+;; Helper function to help efficiently calculate the rank of a tensor.
+(define ranked
+  (λ (t a)
+    (cond
+      [(scalar? t) a]
+      [else (ranked (tref t 0) (add1 a))])))
 
 (module+ test
   (require rackunit)
